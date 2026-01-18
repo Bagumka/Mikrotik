@@ -4,11 +4,11 @@
 #  # Common Configuration
 #.
 
-# 2026-01-17 17:03:20 by RouterOS 7.21
+# 2026-01-18 20:00:00 by RouterOS 7.21
 # software id = ESSW-K0MJ
 #
 # model = wAPG-5HaxD2HaxD
-# serial number = 
+# serial number =
 
 /interface bridge
 add auto-mac=yes comment=xplr.defconf name=bridge
