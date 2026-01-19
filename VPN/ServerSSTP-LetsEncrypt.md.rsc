@@ -73,6 +73,23 @@ set www address=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
     certificate=("Letsencrypt-".[/ip cloud get dns-name])
 
 #.markdown
+#  ## Stale SSTP connection workaround
+#  
+#  Mikrotik have small bug in SSTP. Some times disconnected connections not destroyed. This workaround monitor this kind of connections and removing them
+#.
+
+/system scheduler
+add comment="xplr.vpn: Stale SSTP connection killer" \
+    name=check-sstp-noencinterval=10m on-event="/system script run kill-unencrypted-sstp"\
+    policy=read,write,test start-date=2025-01-01 start-time=0:00:00
+/system script
+add comment="xplr.vpn: Stale SSTP connection killer" dont-require-permissions=no policy=read,write,test\
+    name=kill-unencrypted-sstp source=":foreach i in=[/ppp active find where service=\"sstp\" and encoding=\"\"] do={\
+    \n  :log warning (\"Killing SSTP session without encryption: \" . [/ppp active get \$i name]);\
+    \n  /ppp active remove \$i;\
+    \n}"
+
+#.markdown
 #  ### (OPTIONAL) Configure api-ssl to use this sertificare
 #.
 
