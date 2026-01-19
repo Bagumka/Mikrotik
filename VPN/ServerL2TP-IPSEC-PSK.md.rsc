@@ -3,7 +3,7 @@
 #.markdown
 #  # L2TP/IPsec Server
 #  
-#  ⚠️ NOTE: [ServerCommon.md.rsc](https://raw.githubusercontent.com/Bagumka/Mikrotik/refs/heads/main/VPN/ServerCommon.md.rsc) should be run first !!!
+#  ⚠️ NOTE: [ServerCommon.md.rsc](https://github.com/Bagumka/Mikrotik/blob/main/VPN/ServerCommon.md.rsc) should be run first !!!
 #.
 
 #.markdown
