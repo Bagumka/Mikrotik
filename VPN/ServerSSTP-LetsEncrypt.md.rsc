@@ -90,7 +90,7 @@ add comment="xplr.vpn: Stale SSTP connection killer" dont-require-permissions=no
     \n}"
 
 #.markdown
-#  ### (OPTIONAL) Configure api-ssl to use this sertificare
+#  ### (OPTIONAL) Configure api-ssl to use this sertificate
 #.
 
 /ip service set api-ssl certificate=("Letsencrypt-".[/ip cloud get dns-name])
