@@ -53,8 +53,8 @@
 
 :global xplrVpnWINSIP
 
-/ppp profile 
-    add name="default-VPN" use-encryption=required use-compression=yes change-tcp-mss=yes use-upnp=yes only-one=yes\ 
+/ppp profile
+    add name="default-VPN" use-encryption=required use-compression=yes change-tcp-mss=yes use-upnp=yes only-one=yes\
         local-address=$xplrVpnRouterIP\
         remote-address=VPN\
         wins-server=$xplrVpnWINSIP\
@@ -65,7 +65,6 @@
 #  ⚠️ WARNING!!! When you add the parameter dns-server=x.x.x.x to the profile, you must allow port 53 on all PPP interfaces!
 #  Otherwise, L2TP connections from mobile iOS/Android devices will stop working correctly!!!
 #  Packet loss and lags are observed.
-#  
 #.
 
 {
@@ -99,19 +98,35 @@
 
 :global ClientCommentString "John Doe, +380000000000, Device XYZ"
 
-/ppp secret
-add name="[$genP2PLogin]" password="[$genP2PPass]" profile=default-VPN disabled=no\
-    comment="xplr.vpn: $ClientCommentString"
-
-/ppp secret
-    add name="[$genP2PLogin]" password="[$genP2PPass]" profile=default-VPN disabled=no\
-    routes=198.51.100.0/24\
-    comment="xplr.vpn: $ClientCommentString x Subnet 198.51.100.0/24"
-
-/ppp secret
-    add name="[$genP2PLogin]" password="[$genP2PPass]" profile=default-VPN disabled=no\
-        routes=198.51.100.0/24\
-        local-address=203.0.113.2\
-        remote-address=203.0.113.1\
-        comment="xplr.vpn: $ClientCommentString x Subnet 198.51.100.0/24 via /30 Link"
+#.markdown
+#  ### Simple Dynamic client
+#  
+#  Login and password are auto-generated
+#  
+#  `
+#  /ppp secret
+#  add name="[$genP2PLogin]" password="[$genP2PPass]" profile=default-VPN disabled=no\
+#  comment="xplr.vpn: $ClientCommentString"
+#  `
+#  
+#  ### Dynamic Site-To-Site with subnet routing
+#  
+#  `
+#  /ppp secret
+#  add name="[$genP2PLogin]" password="[$genP2PPass]" profile=default-VPN disabled=no\
+#  routes=198.51.100.0/24\
+#  comment="xplr.vpn: $ClientCommentString x Subnet 198.51.100.0/24"
+#  `
+#  
+#  ### Static Site-To-Site with subnet routing
+#  
+#  `
+#  /ppp secret
+#  add name="[$genP2PLogin]" password="[$genP2PPass]" profile=default-VPN disabled=no\
+#  routes=198.51.100.0/24\
+#  local-address=203.0.113.2\
+#  remote-address=203.0.113.1\
+#  comment="xplr.vpn: $ClientCommentString x Subnet 198.51.100.0/24 via /30 Link"
+#  `
+#.
 
