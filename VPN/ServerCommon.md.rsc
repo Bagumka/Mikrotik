@@ -62,7 +62,7 @@
         comment="xplr.vpn: Single session vpn profile"
 
 #.markdown
-#  ⚠️ WARNING!!! When you add the parameter dns-server=x.x.x.x to the profile, you must allow port 53 on all PPP interfaces!
+#  ⚠️ WARNING!!! When you add the parameter dns-server=x.x.x.x to the profile, you **MUST** allow port 53 on all PPP interfaces!
 #  Otherwise, L2TP connections from mobile iOS/Android devices will stop working correctly!!!
 #  Packet loss and lags are observed.
 #.
@@ -71,8 +71,13 @@
     :local beforeId [/ip firewall filter find comment="defconf: accept established,related,untracked"]
     :if ([:len $beforeId]=0) do={ :set beforeId 0 }
     /ip firewall filter
-    add action=accept chain=input comment="xplr.vpn: accept in DNS on !WAN interfaces" place-before=$beforeId\
-        in-interface-list=!WAN protocol=udp dst-port=53 place-before=$beforeId
+    add comment="xplr.vpn: accept in DNS on !WAN interfaces"\
+        action=accept\
+        chain=input\
+        protocol=udp\
+        dst-port=53\
+        in-interface-list=!WAN\
+        place-before=$beforeId
 }
 
 #.markdown
@@ -119,6 +124,7 @@
 #  `
 #  
 #  ### Static Site-To-Site with subnet routing
+#  
 #  
 #  `
 #  /ppp secret
